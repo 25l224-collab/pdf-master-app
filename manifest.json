@@ -1,0 +1,34 @@
+{
+  "name": "PDF Master Pro Studio",
+  "short_name": "PDF Master",
+  "description": "All-in-One Online & Mobile PDF Suite. Convert, Merge, Split, Sign & Protect PDFs with 100% client-side privacy.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#4f46e5",
+  "background_color": "#0a0f1d",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "business"],
+  "shortcuts": [
+    {
+      "name": "Scan Document",
+      "short_name": "Scan",
+      "description": "Scan a physical document using camera",
+      "url": "./#scanner"
+    },
+    {
+      "name": "Merge PDFs",
+      "short_name": "Merge",
+      "description": "Merge multiple PDF files into one",
+      "url": "./#tool-merge"
+    }
+  ]
+}

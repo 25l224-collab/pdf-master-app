@@ -1,0 +1,15 @@
+# Environments and dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Mobile build directories
+android/
+ios/
+.gradle/
+build/

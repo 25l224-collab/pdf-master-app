@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PDF Master Studio - All-in-One Online & Mobile PDF Suite</title>
+  <meta name="description" content="Convert PDF to Word, Word to PDF, Image to PDF, Merge, Split, Compress, Rotate, Protect, Sign, and AI PDF tools. 100% client-side privacy.">
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PDF Master">
+
+  <!-- Modern Typography: Google Font Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Feather Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+  <!-- PDF & Document Engines -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Gradient Glow Background -->
+  <div class="ambient-glow"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-group" id="logoBtn">
+        <div class="logo-icon-wrapper">
+          <i data-feather="file-text"></i>
+        </div>
+        <div>
+          <span class="logo-text">PDF Master</span>
+          <span class="logo-badge">Pro Studio</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Quick Scanner Button for Mobile & Desktop -->
+        <button class="btn-pill" id="quickScanBtn" title="Scan document using camera">
+          <i data-feather="camera"></i>
+          <span>Scan Doc</span>
+        </button>
+
+        <!-- Install PWA App Button (Mobile / Desktop) -->
+        <button class="btn-pill" id="installAppBtn" style="display: none;" title="Install PDF Master as an App">
+          <i data-feather="download"></i>
+          <span>Install App</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="btn-icon" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+          <i data-feather="moon" id="themeIcon"></i>
+        </button>
+
+        <!-- Backend Status Indicator -->
+        <button class="btn-pill" id="backendStatusBtn" title="Status of local document engine">
+          <i data-feather="activity" id="backendStatusIcon"></i>
+          <span id="backendStatusText">Local Mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- ================= CATALOG VIEW ================= -->
+    <section class="catalog-view" id="catalogView">
+      <!-- Hero -->
+      <div class="hero-section">
+        <div class="hero-pill">
+          <i data-feather="shield"></i>
+          <span>100% Client-Side Privacy • Zero File Upload to Unknown Clouds</span>
+        </div>
+        <h1 class="hero-title">
+          Every tool you need to work with <br>
+          <span class="hero-gradient-text">PDFs in One Place</span>
+        </h1>
+        <p class="hero-subtitle">
+          Convert PDF to Word vice versa, Images to PDF, Merge, Split, Compress, Rotate, Sign, Protect, and AI Document Analysis.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Category Tabs -->
+      <div class="controls-bar">
+        <div class="search-box-wrapper">
+          <i data-feather="search" class="search-icon"></i>
+          <input type="text" class="search-input" id="toolSearchInput" placeholder="Search 38+ tools (e.g. 'Word to PDF', 'Merge', 'OCR', 'Sign')...">
+        </div>
+
+        <nav class="categories-pills" id="categoryPills">
+          <!-- Injected via JavaScript -->
+        </nav>
+      </div>
+
+      <!-- Grid of Tools -->
+      <div class="tools-grid" id="toolsGrid">
+        <!-- Populated via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ================= STUDIO VIEW (Interactive Work Area) ================= -->
+    <section class="studio-view" id="studioView">
+      <div class="studio-header">
+        <div class="studio-title-group">
+          <button class="btn-icon" id="backToCatalogBtn" title="Back to All Tools">
+            <i data-feather="arrow-left"></i>
+          </button>
+          <div class="studio-tool-icon" id="studioToolIcon">
+            <i data-feather="file"></i>
+          </div>
+          <div>
+            <h2 class="studio-title" id="studioToolTitle">Tool Title</h2>
+            <p class="studio-subtitle" id="studioToolDesc">Tool Description</p>
+          </div>
+        </div>
+
+        <div class="studio-header-actions">
+          <button class="btn-pill" id="resetStudioBtn">
+            <i data-feather="rotate-ccw"></i>
+            <span>Clear / Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dropzone (Visible when no files selected) -->
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" class="file-input-hidden">
+        <div class="dropzone-icon">
+          <i data-feather="upload-cloud"></i>
+        </div>
+        <h3 class="dropzone-title">Drop your files here, or click to browse</h3>
+        <p class="dropzone-subtitle" id="dropzoneFileTypes">Supports PDF, Word, Images, Text documents</p>
+        <button class="btn-pill btn-primary" id="browseFilesBtn">
+          <i data-feather="folder"></i>
+          <span>Select Files</span>
+        </button>
+      </div>
+
+      <!-- Workspace (Visible after file selection) -->
+      <div class="workspace-grid" id="workspaceGrid" style="display: none;">
+        <!-- Left: Preview / Thumbnails -->
+        <div class="workspace-preview-panel">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4 style="font-weight: 600; font-size: 0.95rem;">Document Pages & Files</h4>
+            <span id="pageCountBadge" style="font-size: 0.8rem; color: var(--text-secondary);">0 Pages</span>
+          </div>
+          <div class="thumbnail-grid" id="thumbnailGrid">
+            <!-- Thumbnails rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Right: Options & Processing Action -->
+        <div class="workspace-options-panel">
+          <h4 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem;">Tool Settings</h4>
+          
+          <div id="dynamicToolOptions">
+            <!-- Dynamic controls populated based on current tool -->
+          </div>
+
+          <div style="margin-top: auto; padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn-pill btn-primary" id="processActionBtn" style="justify-content: center; padding: 0.9rem 1.5rem; font-size: 1rem;">
+              <i data-feather="play"></i>
+              <span id="processActionBtnText">Process & Download</span>
+            </button>
+            <button class="btn-pill" id="addMoreFilesBtn" style="justify-content: center;">
+              <i data-feather="plus"></i>
+              <span>Add More Files</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Camera Scanner Overlay -->
+  <div class="scanner-overlay" id="scannerOverlay">
+    <div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center; color: #fff;">
+      <h3 style="font-size: 1.1rem; font-weight: 600;">Scan Document</h3>
+      <button class="btn-icon" id="closeScannerBtn" style="background: rgba(255,255,255,0.2); color: #fff; border: none;">
+        <i data-feather="x"></i>
+      </button>
+    </div>
+    <div class="scanner-video-container">
+      <video id="scannerVideo" autoplay playsinline></video>
+      <div class="scanner-guide"></div>
+    </div>
+    <div class="scanner-controls">
+      <span id="scannerPageCount" style="color: #fff; font-size: 0.9rem; font-weight: 600;">0 snaps</span>
+      <button class="shutter-btn" id="shutterBtn" title="Take Snap"></button>
+      <button class="btn-pill btn-primary" id="finishScanBtn">
+        <i data-feather="check"></i>
+        <span>Create PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sign PDF Modal -->
+  <div class="modal-overlay" id="signModalOverlay">
+    <div class="modal-content" style="max-width: 500px;">
+      <h3 style="margin-bottom: 0.5rem; font-weight: 700;">Create Electronic Signature</h3>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Draw your signature below using mouse or touchscreen.</p>
+      
+      <div style="border: 2px dashed var(--border-color); border-radius: var(--radius-md); background: #ffffff; margin-bottom: 1rem; overflow: hidden;">
+        <canvas id="signatureCanvas" width="460" height="180" style="touch-action: none; display: block;"></canvas>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; gap: 0.5rem;">
+        <button class="btn-pill" id="clearSignatureBtn">
+          <i data-feather="trash-2"></i>
+          <span>Clear</span>
+        </button>
+        <button class="btn-pill btn-primary" id="saveSignatureBtn">
+          <i data-feather="check"></i>
+          <span>Apply to PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Modal -->
+  <div class="modal-overlay" id="progressModal">
+    <div class="modal-content">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--primary-glow); color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+        <i data-feather="loader" style="animation: spin 1.5s linear infinite;"></i>
+      </div>
+      <h3 id="progressModalTitle" style="font-weight: 700; font-size: 1.25rem;">Processing Document...</h3>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+      <p id="progressStatusText" style="font-size: 0.85rem; color: var(--text-secondary);">Preparing pages...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" id="footerPrivacy">Client-Side Privacy</a>
+      <a href="#" id="footerMobile">Mobile App Guide</a>
+      <a href="#" id="footerBackend">Python Backend Setup</a>
+    </div>
+    <p>© 2026 PDF Master Studio • Engineered for Web & Mobile Devices</p>
+  </footer>
+
+  <!-- Application Logic Scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "appId": "com.pdfmaster.pro",
+  "appName": "PDF Master Studio",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true
+  },
+  "plugins": {
+    "Camera": {
+      "permissions": ["camera", "photos"]
+    },
+    "Filesystem": {
+      "permissions": ["storage"]
+    }
+  }
+}
