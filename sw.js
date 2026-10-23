@@ -1,5 +1,5 @@
 // sw.js - Service Worker for PDF Master Studio (Offline PWA)
-const CACHE_NAME = 'pdf-master-v1';
+const CACHE_NAME = 'pdf-master-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,7 +8,11 @@ const ASSETS_TO_CACHE = [
   './tools-data.js',
   './pdf-engine.js',
   './manifest.json',
-  './icon.svg'
+  './icon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './screenshot-desktop.png',
+  './screenshot-mobile.png'
 ];
 
 self.addEventListener('install', (event) => {
